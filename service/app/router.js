@@ -5,5 +5,5 @@
  */
 module.exports = app => {
   require('./router/frontEnd')(app)
-
+  require('./router/backEnd')(app)
 };
