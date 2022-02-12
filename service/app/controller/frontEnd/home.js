@@ -31,6 +31,12 @@ class HomeController extends Controller {
     let processedResults = this.mergeTag(results);
     ctx.body = { processedResults }
   }
+  // 增加文章热度
+  async addArticleVisitCount() {
+    const { ctx } = this
+    let results = await ctx.service.crudArticle.addArticleVisitCount()
+    ctx.body = results
+  }
   // 将数组中的标签合并
   mergeTag(arr) {
     let map = new Map()

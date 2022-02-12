@@ -33,12 +33,18 @@ module.exports = appInfo => {
     csrf: {
       enable: false
     },
-    domainWhiteList: ['*'],
+    domainWhiteList: ['*']
   }
   // 跨域设置
   config.cors = {
-    origin: '*',
+    // 允许所有origin
+    origin: ctx => ctx.get('origin'),
+    credentials: true, // 允许cookies跨域
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
+  }
+  config.session = {
+    maxAge: 1000 * 60 * 30,
+    renew: true
   }
   // add your user config here
   const userConfig = {

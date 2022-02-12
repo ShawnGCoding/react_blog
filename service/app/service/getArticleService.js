@@ -2,7 +2,7 @@
 const Service = require('egg').Service;
 class DataService extends Service {
   async getArticleList() {
-    let sql = 'select article.id as id,article.title as title,article.introduction as introduction,type.typeName as typeName from article JOIN article_type JOIN type WHERE article.id = article_type.article_id and article_type.type_id = type.id'
+    let sql = 'select article.id as id,article.title as title,article.introduction as introduction,type.typeName as typeName,article.visit_count as visit_count,createTime from article JOIN article_type JOIN type WHERE article.id = article_type.article_id and article_type.type_id = type.id'
     const results = await this.app.mysql.query(sql);
     return results;
   }
@@ -11,7 +11,7 @@ class DataService extends Service {
     const { ctx } = this;
     let id = ctx.params.id;
     // console.log("params:", ctx.params)
-    let sql = 'select article.id as id,article.article_content as content,article.title as title,article.introduction as introduction,type.typeName as typeName from article JOIN article_type JOIN type WHERE article.id = article_type.article_id and article_type.type_id = type.id and article.id = ' + id;
+    let sql = `select article.id as id,article.article_content as content,article.title as title,article.visit_count as visit_count,article.introduction as introduction,article.createTime as createTime,type.typeName as typeName from article JOIN article_type JOIN type WHERE article.id = article_type.article_id and article_type.type_id = type.id and article.id='${id}'`;
     const results = await this.app.mysql.query(sql)
     return results
   }
@@ -24,7 +24,7 @@ class DataService extends Service {
   async getArticleByType() {
     const { ctx } = this;
     let id = ctx.params.id;
-    let sql = 'select article.id as id,article.title as title,article.introduction as introduction,type.typeName as typeName from article JOIN article_type JOIN type WHERE article.id = article_type.article_id and article_type.type_id = type.id and type.id = ' + id;
+    let sql = `select article.id as id,article.title as title,article.createTime as createTime,article.visit_count as visit_count,article.introduction as introduction,type.typeName as typeName from article JOIN article_type JOIN type WHERE article.id = article_type.article_id and article_type.type_id = type.id and type.id ='${id}'`;
     const results = await this.app.mysql.query(sql)
     return results
 
